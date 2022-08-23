@@ -3,7 +3,7 @@ from PyQt6.uic import loadUiType
 import requests
 import creds
 
-def get_weather(zipcode: str): 
+def get_weather(zipcode: str) -> dict:
     APICALL = f'https://api.openweathermap.org/data/2.5/weather'
     # GET method at url, params is the set of extra variables for the api, returns a JSON object
     payload = {'zip': zipcode, 'appid': creds.APIKEY}
@@ -11,14 +11,13 @@ def get_weather(zipcode: str):
 
     if resp.status_code != 200:
         # something went wrong
-        print('Something went wrong.')
-        return resp
+        print(f'Something went wrong. Error code {resp.status_code}.')
     else:
         # success getting weather forecast
-        print(str(resp.json()))
-        return resp
+        return resp.json()
 
-print(get_weather('23322'))
+weather = get_weather('23322')
+print(weather)
 
 # # file from QtCreator
 # qtcreator_file = '/Users/giorgio/Documents/mainwindow.ui'
