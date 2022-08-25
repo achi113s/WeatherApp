@@ -6,7 +6,7 @@ import creds
 def get_weather(zipcode: str) -> dict:
     APICALL = f'https://api.openweathermap.org/data/2.5/weather'
     # GET method at url, params is the set of extra variables for the api, returns a JSON object
-    payload = {'zip': zipcode, 'appid': creds.APIKEY}
+    payload = {'zip': zipcode, 'appid': creds.APIKEY, 'units': 'imperial'}
     resp = requests.get(APICALL, params=payload)
 
     if resp.status_code != 200:
@@ -16,8 +16,10 @@ def get_weather(zipcode: str) -> dict:
         # success getting weather forecast
         return resp.json()
 
-weather = get_weather('23322')
-print(weather)
+zipcode = '23322'
+weather = get_weather(zipcode)
+temperature = weather['main']['temp']
+print(f'The temperature in {zipcode} is {temperature} degrees Fahrenheit.')
 
 # # file from QtCreator
 # qtcreator_file = '/Users/giorgio/Documents/mainwindow.ui'
